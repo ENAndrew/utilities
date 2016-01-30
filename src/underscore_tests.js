@@ -16,11 +16,33 @@ var _ = { };
   // Return an array of the first n elements of an array. If n is undefined,
   // return just the first element.
   _.first = function(array, n) {
+      var newArray = [];
+      if(n === undefined) {
+          return array[0];
+      } else if (n > array.length) {
+          for(var i = 0; i < array.length; i++){
+              newArray.push(array[i]);
+          }
+      } else {
+          for(var i = 0; i < n; i++) {
+              newArray.push(array[i]);
+          }
+      }
+      return newArray;
   };
 
   // Like first, but for the last elements. If n is undefined, return just the
   // last element.
   _.last = function(array, n) {
+      var newArray = [];
+      if(n === undefined) {
+          return array[array.length - 1];
+      } else if(n > array.length) {
+          return array;
+      } else {
+          newArray = array.splice(array.length - n, array.length - 1);
+      }
+      return newArray;
   };
 
   // Call iterator(value, key, collection) for each element of collection.
@@ -31,6 +53,13 @@ var _ = { };
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
   _.indexOf = function(array, target){
+      var indices = [];
+      for(var i = 0; i < array.length; i++) {
+          if(array[i] === target) {
+              indices.push(i);
+          }
+      }
+      return indices;
   };
 
   // Return all elements of an array that pass a truth test.
