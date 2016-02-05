@@ -16,19 +16,7 @@ var _ = { };
   // Return an array of the first n elements of an array. If n is undefined,
   // return just the first element.
   _.first = function(array, n) {
-      var newArray = [];
-      if(n === undefined) {
-          return array[0];
-      } else if (n > array.length) {
-          for(var i = 0; i < array.length; i++){
-              newArray.push(array[i]);
-          }
-      } else {
-          for(var i = 0; i < n; i++) {
-              newArray.push(array[i]);
-          }
-      }
-      return newArray;
+     return n ? array.splice(0, n) : array[0];  //if n is defined, it will return it, otherwise it will return the first item
   };
 
   // Like first, but for the last elements. If n is undefined, return just the
@@ -53,10 +41,12 @@ var _ = { };
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
   _.indexOf = function(array, target){
-      var indices = [];
+      var indices;
       for(var i = 0; i < array.length; i++) {
           if(array[i] === target) {
-              indices.push(i);
+              return indices = i;
+          } else {
+              indices = -1;
           }
       }
       return indices;
@@ -64,25 +54,61 @@ var _ = { };
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, iterator) {
+      var passArray = [];
+      collection.forEach(function(item){
+          if(iterator(item)) {
+              passArray.push(item);
+          }
+      });
+      return passArray;
   };
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, iterator) {
+      var rejectArray = [];
+      collection.forEach(function(item){
+          if(!iterator(item)) {
+              rejectArray.push(item);
+          }
+      });
+      return rejectArray;
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+      var testObj = {};
+      var uniqArray = [];
+      array.forEach(function(item){
+          testObj[item] = null;
+      });
+      for(var key in testObj) {
+          uniqArray.push(key);
+      }
+      return uniqArray;
   };
-
 
   // Return the results of applying an iterator to each element.
   _.map = function(array, iterator) {
+      var resultArray = [];
+      array.forEach(function(item) {
+          resultArray.push(iterator(item));
+      });
+      return resultArray;
   };
 
   // Takes an array of objects and returns and array of the values of
   // a certain property in it. E.g. take an array of people and return
   // an array of just their ages
   _.pluck = function(array, propertyName) {
+      var resultArray = [];
+      array.forEach(function(item){
+          for(var key in item) {
+              if(key === propertyName) {
+                  resultArray.push(item[key]);
+              }
+          }
+      });
+      return resultArray;
   };
 
   // Calls the method named by methodName on each value in the list.
@@ -96,7 +122,7 @@ var _ = { };
   };
 
   // Determine if the array or object contains a given value (using `===`).
-  _.contains = function(collection, target) {
+  _.contains = function(collection, target) {  
   };
 
 
